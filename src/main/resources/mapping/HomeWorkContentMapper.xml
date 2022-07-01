@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sgq.excel.mapper.HomeWorkContentMapper">
+    <resultMap id="BaseMap" type="com.sgq.excel.pojo.HomeWorkContent">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="clazz" property="clazz" jdbcType="VARCHAR"/>
+        <result column="day_index" property="dayIndex" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" />
+        <result column="end_time" property="endTime" />
+    </resultMap>
+
+
+    <sql id="all">
+         id,clazz,day_index,title,create_time,end_time
+    </sql>
+    <sql id="table">
+        homework_content
+    </sql>
+
+ <insert id="insertBatch" parameterType="com.sgq.excel.pojo.HomeWorkContent">
+     insert into
+     <include refid="table"/>
+     ( <include refid="all"/>)
+     values
+     <foreach collection="list" item="item"  separator="," >
+
+         (null,
+         #{item.clazz},
+         #{item.dayIndex},
+         #{item.title},
+         #{item.createTime},
+         #{item.endTime}
+         )
+
+     </foreach>
+
+ </insert>
+    
+    <select id="selectSubmitPoints" resultType="com.sgq.excel.bean.SubmitPointsBean" parameterType="java.lang.String">
+        SELECT
+        res3.clazz,res3.name,SUM(res3.point) as 'points',
+        SUM(res3.point)/((SELECT  max(DISTINCT(s.day_index))+1 as 'subNum'
+        from stu_homework s
+        WHERE s.clazz = 'vip2202')*5 ) as 'percentage'
+        FROM
+        (SELECT
+        res1.clazz,res1.day_index,res2.uuid,res2.name,
+        CASE WHEN res2.update_time is NULL THEN -5
+            WHEN res2.update_time BETWEEN res1.create_time AND res1.end_time THEN 5
+            WHEN res1.end_time &lt; res2.update_time THEN 3
+        END  AS 'point'
+        from
+            (SELECT
+            hc.clazz ,
+            hc.day_index ,
+            hc.create_time,
+            hc.end_time
+            from homework_content hc where hc.clazz = #{clazz}) res1
+        LEFT JOIN
+            (SELECT
+            sh.day_index,
+            sh.`name`,
+            sh.uuid,
+            sh.state ,
+            sh.update_time
+            FROM stu_homework sh
+            WHERE sh.clazz =  #{clazz}) res2
+        on res1.day_index = res2.day_index) res3
+        GROUP BY res3.uuid
+        ORDER BY points DESC
+    </select>
+
+    <delete id="deleteByClazz" parameterType="java.lang.String">
+        delete from <include refid="table"/>
+        where clazz = #{clazz}
+    </delete>
+
+
+</mapper>

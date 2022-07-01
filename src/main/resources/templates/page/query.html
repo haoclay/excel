@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+
+        <meta http-equiv="Content-Type"content="text/html; charset=UTF-8">
+        <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Nothing is impossible</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="/other/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/other/assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="/other/assets/css/form-elements.css">
+        <link rel="stylesheet" href="/other/assets/css/style.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="/other/assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/other/assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/other/assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/other/assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="/other/assets/ico/apple-touch-icon-57-precomposed.png">
+
+
+        <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+
+       <style type="text/css">
+
+
+
+
+           .money{
+               position: absolute;
+               float: left;
+               /*margin-left: -55px;*/
+               background-image: -webkit-linear-gradient(left,blue,#66ffff 10%,#cc00ff 20%,#CC00CC 30%, #CCCCFF 40%, #00FFFF 50%,#CCCCFF 60%,#CC00CC 70%,#CC00FF 80%,#66FFFF 90%,blue 100%);
+               -webkit-text-fill-color: transparent;/* 将字体设置成透明色 */
+               -webkit-background-clip: text;/* 裁剪背景图，使文字作为裁剪区域向外裁剪 */
+               -webkit-background-size: 200% 100%;
+               -webkit-animation: masked-animation 4s linear infinite;
+               font-size: 20px;
+           }
+
+           @keyframes masked-animation {
+               0% {
+                   background-position: 0  0;
+               }
+               100% {
+                   background-position: -100%  0;
+               }
+           }
+       </style>
+    </head>
+
+    <body >
+
+        <!-- Top content -->
+        <div class="top-content"style="margin-top:-40px ">
+        	
+            <div class="inner-bg"  >
+                <div class="container">
+                    <div class="row" >
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1><strong>作业缺交次数查询</strong>   By SGQ</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>数据最近更新信息</h3>
+                                    <p class="money" th:if="${stuUpdate == null} " th:text="xxxx-xx-xx"></p>
+                                    <p class="money" th:if="${stuUpdate != null} " th:text="'于'+${stuUpdate.getUpdateTimePlus()}+'更新'"></p>
+                                    <p class="title-info" th:if="${stuUpdate == null} " th:text="暂无信息披露" style="color: tomato;margin-top: 25px"></p>
+                                    <p class="title-info" th:if="${stuUpdate != null} " th:text="${stuUpdate.getStartTime() +'~'+stuUpdate.getEndTime()}" style="color: #00ff66;margin-top: 25px"></p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-key"></i>
+                        		</div>
+                            </div>
+                            <div class="form-bottom">
+
+                                <div id="clazz" typp="query" style="width:90%;height: 40px;margin-left:0px;margin-top: 10px;"></div>
+                                <div id="subCount" style="width:90%;height: 40px;margin-left:0px;margin-top: 10px;"></div>
+                                <div id="startDay" style="width:90%;height: 40px;margin-left:0px;margin-top: 10px;"></div>
+                                <div id="endDay" style="width:90%;height: 40px;margin-left:0px;margin-top: 10px;" ></div>
+
+                                <button style="margin-left: 100px;margin-top: 10px"class="btn" id="queryBtn">查询作业信息</button>
+                                <button style="margin-left: 30px;margin-top: 10px"class="btn" id="upDatePageBtn">去更新</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+        <div class="copyrights">Collect from <a href="http://47.114.73.72/"  title="网站模板">sgq</a></div>
+
+
+        <!-- Javascript -->
+        <script src="/other/assets/js/jquery-1.11.1.min.js"></script>
+        <script src="/other/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/other/assets/js/jquery.backstretch.min.js"></script>
+        <script src="/other/assets/js/scripts.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="/other/assets/js/placeholder.js"></script>
+        <![endif]-->
+
+        <link rel="stylesheet" href="/cmz-select/css/iconfont/iconfont.css" />
+        <link rel="stylesheet" href="/cmz-select/cmzInput.css" />
+        <script src="/cmz-select/cmzInput.js"></script>
+
+        <link rel="stylesheet" href="/stuHomeWork/fy-alert/css/alert.css">
+        <link rel="stylesheet" href="/stuHomeWork/fy-alert/css/fy-alert.css">
+        <script src="/stuHomeWork/fy-alert/js/fy-alert.js"></script>
+    </body>
+
+
+
+
+</html>
+
+<script type="text/javascript">
+
+    $.ajax({
+        url:"/stuHomeWork/findTitleAndDayIndexFromDB",
+        type:"post",
+        data:{'clazz': 'vip2202'},
+        dataType:'json',
+        success:function (data) {
+            for (var i = 0; i < data.titleList.length; i++) {
+                titleDayList[i] = { id: i, day: data.titleList[i], dayIndex: data.dayIndexList[i] };
+                countList[i] = { id: i, count: (i+1) };
+            }
+            var clazzss =[
+                {id : 1, clazz : 'vip2201'},
+                {id : 2, clazz : 'vip2202'},
+                {id : 3, clazz : 'vip2203'},
+                {id : 4, clazz : 'vip2204'},
+                {id : 5, clazz : 'vip2205'},
+                {id : 6, clazz : 'vip2206'},
+                {id : 7, clazz : 'vip2207'},
+                {id : 8, clazz : 'vip2208'},
+                {id : 9, clazz : 'vip2209'},
+                {id : 10, clazz : 'vip2210'},
+                {id : 11, clazz : 'vip2211'},
+                {id : 12, clazz : 'vip2212'},
+                {id : 13, clazz : 'vip2109'}
+            ]
+
+            if(titleDayList != undefined && titleDayList.length!=0){
+                arr = titleDayList;
+            }
+
+            // 选中时触发
+            var callback = function (val) {
+                console.log(val)
+            }
+
+            // 自定义下拉列表：必须传数组，且每项dom的自定义样式必须为行内样式
+            // 胡子语法{{ xxx }},括号之间不能用空格，如：{ {} } 无法识别
+            var liRow = [
+                '<div class="fl" style="width:130px;">{{ day }}</div>',
+                '<div class="fl" style="width:90px;">{{dayIndex}}</div>'
+            ]
+
+            $('#clazz').cmzSelect({
+                // #div为容器
+                id: 'id', // 唯一标识
+                currentId: 2, // 当前选择的数据
+                arr: clazzss, // 数据源
+                label: 'clazz', // input展示数据
+                searchList: ['clazz'],// 模糊查询字段列表
+            })
+
+            $('#subCount').cmzSelect({
+                // #div为容器
+                id: 'id', // 唯一标识
+                currentId: 0, // 当前选择的数据
+                arr: countList, // 数据源
+                label: 'count', // input展示数据
+                searchList: ['count'],// 模糊查询字段列表
+            })
+
+            $('#startDay').cmzSelect({
+                // #div为容器
+                id: 'id', // 唯一标识
+                currentId: titleDayList[0].id, // 当前选择的数据
+                arr, // 数据源
+                label: 'dayIndex', // input展示数据
+                callback, // 回调函数
+                liRow, // 自定义下拉列表（可以不传）
+                searchList: ['day', 'dayIndex'] // 模糊查询字段列表
+            })
+
+            $('#endDay').cmzSelect({
+                id: 'id', // 唯一标识
+                currentId: titleDayList[0].id, // 当前选择的数据
+                arr, // 数据源
+                label: 'dayIndex', // input展示数据
+                callback, // 回调函数
+                liRow, // 自定义下拉列表（可以不传）
+                searchList: ['day', 'dayIndex'] // 模糊查询字段列表
+            })
+
+
+        }
+
+    })
+
+
+    $(function () {
+        var submitFlag = false ;
+        $("button#queryBtn").click(function () {
+
+            if (endDay < startDay) {
+                fyAlert.msg("结束日期必须不小于开始日期!", {icon: 3, animateType: 3});
+            } else {
+                if (submitFlag == false) {
+                    submitFlag = true;
+                    $.ajax({
+                        url: "/stuHomeWork/findBy",
+                        type: "post",
+                        data: {
+                            'clazz': clazz,
+                            'subCount': subCount,
+                            'start': startDay,
+                            'end': endDay,
+                            'startTitle': titleDayList[startId].day,
+                            'endTitle': titleDayList[endId].day
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.state == 1) {
+                                fyAlert.msg(data.info, {icon: 1, animateType: 1});
+                                setTimeout(function () {
+                                    window.location.href = "/stuHomeWork/showHomeWork"
+                                }, 1000);
+
+                            } else {
+                                fyAlert.msg(data.info, {icon: 3, animateType: 3});
+                            }
+                            submitFlag = false;
+                        }
+                    });
+                } else {
+                    fyAlert.msg("请求正在执行当中请稍后...", {icon: 4, animateType: 4});
+                }
+
+            }
+
+        });
+        
+        $("button#upDatePageBtn").click(function () {
+            window.location.href="/stuHomeWork/updatePage";
+        })
+
+    })
+
+
+</script>
+
+<script>
+
+
+</script>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sgq.excel.mapper.StuHomeWorkMapper">
+    <resultMap id="BaseMap" type="com.sgq.excel.pojo.StuHomeWork">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="clazz" property="clazz" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="VARCHAR"/>
+        <result column="state" property="state" jdbcType="INTEGER"/>
+        <result column="submit_date" property="submitDate" jdbcType="TIMESTAMP"/>
+        <result column="remark" property="remark" jdbcType="TIMESTAMP"/>
+        <result column="day_index" property="dayIndex" jdbcType="INTEGER"/>
+        <result column="uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+
+    <resultMap id="BeanMap" type="com.sgq.excel.bean.StuHomeWorkBean">
+        <result column="clazz" property="clazz" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="subNum" property="subNum" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="TitleDayBeanMap" type="com.sgq.excel.bean.TitleDayBean">
+        <result column="create_date" property="title" jdbcType="VARCHAR"/>
+        <result column="day_index" property="day" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="all">
+
+
+    </sql>
+    <sql id="table">
+        stu_homework
+    </sql>
+
+    <select id="selectSubmitCountByMap" resultMap="BeanMap" parameterType="java.util.Map">
+        select
+        ANY_VALUE(s.clazz) as 'clazz' , ANY_VALUE(s.name) as 'name' , count(*) as 'subNum'
+        from <include refid="table"/> s
+        <where>
+            <if test="clazz!=null">
+                s.clazz = #{clazz} and
+            </if>
+                s.state = '0'
+             <if test="start!=null and end!=null">
+                and s.day_index BETWEEN #{start} and  #{end}
+             </if>
+                GROUP BY s.uuid
+             <if test="subCount!=null">
+                HAVING COUNT(*) >= #{subCount}
+             </if>
+
+        </where>
+
+    </select>
+
+    <insert id="insertBatch" parameterType="com.sgq.excel.pojo.StuHomeWork" >
+             insert into
+             <include refid="table"/>
+             (id,name,clazz,create_date,state,submit_date,remark,day_index,uuid,update_time)
+             values
+             <foreach collection="list" item="item"  separator="," >
+
+               (null,
+               #{item.name},
+                #{item.clazz},
+                #{item.createDate},
+                #{item.state},
+                #{item.submitDate},
+                #{item.remark},
+                 #{item.dayIndex},
+                 #{item.uuid},
+                 #{item.updateTime}
+                )
+
+             </foreach>
+    </insert>
+
+    <delete id="deleteByBatchMap" parameterType="java.util.Map">
+        DELETE from
+        <include refid="table"/>
+        <where>
+            1=1
+            <if test="clazz != null">
+                and clazz = #{clazz}
+            </if>
+            <if test="startDay != null and endDay!=null ">
+                and day_index
+                BETWEEN #{startDay} and #{endDay}
+            </if>
+        </where>
+    </delete>
+
+    <select id="findTitleAndDayIndexDB" resultMap="TitleDayBeanMap" parameterType="java.util.Map">
+        select
+        create_date , day_index
+        from  <include refid="table"/>
+        <where>
+            1=1
+            <if test="clazz != null">
+                and  clazz = #{clazz}
+            </if>
+
+        </where>
+        GROUP BY create_date , day_index
+        ORDER BY day_index
+    </select>
+
+    <select id="selectMaxUpdateTime" parameterType="java.lang.String" resultType="java.util.Date">
+        SELECT DISTINCT remark
+        FROM  <include refid="table"/>
+        WHERE
+        day_index = (SELECT max(day_index)  FROM stu_homework);
+    </select>
+<!--    detailed-->
+    <select id="selectTitleAndState"  parameterType="java.util.Map" resultMap="BaseMap">
+        SELECT create_date,state
+        FROM <include refid="table"/>
+        where clazz = #{clazz} and `name` = #{name}
+        ORDER BY day_index
+    </select>
+
+</mapper>

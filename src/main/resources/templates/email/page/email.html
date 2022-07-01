@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>哈哈哈,欢迎来到强哥的邮箱-.-!!</title>
+    <link href="email/image/boji.ico" rel="icon" />
+    <link rel="stylesheet" href="email/css/index.css">
+
+    <link rel="stylesheet" type="text/css" href="simditor/styles/simditor.css" />
+
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="simditor/scripts/module.min.js"></script>
+    <script type="text/javascript" src="simditor/scripts/hotkeys.min.js"></script>
+    <script type="text/javascript" src="simditor/scripts/uploader.min.js"></script>
+    <script type="text/javascript" src="simditor/scripts/simditor.min.js"></script>
+    <script src="email/js/email.js"></script>
+</head>
+<body>
+<canvas class="cavs" width="1575" height="1337"></canvas>
+
+<div class="loginmain" style="width: 800px;height: 500px">
+    <div class="login-title">
+        <span>强哥的邮箱</span>
+    </div>
+
+    <div class="login-con send-con">
+        <div class="login-user">
+            <div class="icon">
+                <img src="email/image/user_icon_copy.png" alt="">
+            </div>
+            <input type="text" name="target" placeholder="收件人" autocomplete="off" value="">
+        </div>
+        <div class="login-user">
+            <div class="icon">
+                <img src="email/image/user_icon_copy.png" alt="">
+            </div>
+            <input type="text" name="title" placeholder="标题" autocomplete="off" value="">
+        </div>
+        <textarea id="editor" placeholder="Balabala" autofocus></textarea>
+
+        <script>
+            var editor = new Simditor({
+                textarea: $('#editor')
+                //optional options
+            });
+
+        </script>
+        <div class="login-btn">
+            <input type="button" value="send">
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
+
+<script src="https://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="email/js/ban.js"></script>
+

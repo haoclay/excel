@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../static/cmz-select/jQuery/jQuery-2.1.4.min.js"></script>
+
+    <style type="text/css">
+
+    </style>
+
+    <script src="https://eqcn.ajz.miesnfu.com/wp-content/plugins/wp-3d-pony/live2dw/lib/L2Dwidget.min.js"></script>
+    <!--小帅哥： https://unpkg.com/live2d-widget-model-chitose@1.0.5/assets/chitose.model.json-->
+    <!--萌娘：https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json-->
+    <!--小可爱（女）：https://unpkg.com/live2d-widget-model-koharu@1.0.5/assets/koharu.model.json-->
+    <!--小可爱（男）：https://unpkg.com/live2d-widget-model-haruto@1.0.5/assets/haruto.model.json-->
+    <!--初音：https://unpkg.com/live2d-widget-model-miku@1.0.5/assets/miku.model.json-->
+    <!-- 上边的不同链接显示的是不同的小人，这个可以根据需要来选择 下边的初始化部分，可以修改宽高来修改小人的大小，或者是鼠标移动到小人上的透明度，也可以修改小人在页面出现的位置。 -->
+    <script>
+        /*https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json*/
+        L2Dwidget.init({ "model": { jsonPath:
+                    "https://unpkg.com/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json",
+                "scale": 1 }, "display": { "position": "right", "width": 110, "height": 150,
+                "hOffset": 0, "vOffset": -20 }, "mobile": { "show": true, "scale": 0.5 },
+            "react": { "opacityDefault": 0.8, "opacityOnHover": 0.1 } });
+    </script>
+
+
+
+</head>
+<body>
+  <h1>哈哈哈</h1>
+
+<div id="div1">
+    <p>123</p>
+    <a href="">55</a>
+</div>
+<button id="btn">hhh</button>
+  <img src="../../static/stuHomeWork/rank/1sliver.png" alt="">
+</body>
+</html>
+<script>
+    $(function () {
+        $("#btn").click(function () {
+           /* var list=document.getElementById("div1");
+            list.removeChild(list.childNodes[0]);
+            alert(formatDate(new Date().valueOf()));*/
+            let str = 'abcde';
+
+            console.log(str.search('f'));// 0
+
+            console.log(str.search(/A/i));//使用正则匹配忽略大小写检索   返回 0
+
+            let str1 = '已提交';
+
+            let reg = /未提交/i;
+            // alert(reg.test(str1));// true
+
+           alert(toPercent(0.1))
+            alert(jsDate.format("yyyy-MM-dd hh:mm:ss"));
+        })
+    })
+    function toPercent(point) {
+        var str = Number(point * 100).toFixed(2);
+        str += "%";
+        return str;
+    }
+    var point = 0.123456;
+    $("#bb").html(toPercent(point));//调用toPercent到页面即可
+    function formatDate(str){
+        let date = new Date(str);
+        let year = date.getFullYear();
+        let month= date.getMonth() + 1;
+        month= month < 10 ? ('0' + month) : month;
+        let day = date.getDate();
+        day = day < 10 ? ('0' + day ) : day ;
+        let h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        let m = date.getMinutes();
+        m = m < 10 ? ('0' + m) : m;
+        let s = date.getSeconds();
+        s = s < 10 ? ('0' + s) : s;
+        return year + '-' + month + '-' + day + ' ' + h + ':' + m + ':' + s;
+    }
+
+    /**
+     * 时间对象的格式化;
+     */
+    Date.prototype.format = function (format)
+    {
+        /*
+         * eg:format="YYYY-MM-dd hh:mm:ss";
+         */
+        var o =
+            {
+                "M+" : this.getMonth() + 1, // month
+                "d+" : this.getDate(), // day
+                "h+" : this.getHours(), // hour
+                "m+" : this.getMinutes(), // minute
+                "s+" : this.getSeconds(), // second
+                "q+" : Math.floor((this.getMonth() + 3)  / 3), // quarter
+                "S" : this.getMilliseconds() // millisecond
+            }
+        if (/(y+)/.test(format))
+        {
+            format = format.replace(RegExp.$1, (this.getFullYear() + "") .substr(4 - RegExp.$1.length));
+        }
+        for ( var k in o)
+        {
+            if (new RegExp("(" + k + ")").test(format))
+            {
+                format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+            }
+        }
+        return format;
+    }
+
+
+    var jsDate=new Date(javaDate.time);
+
+
+
+</script>

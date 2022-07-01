@@ -1,0 +1,34 @@
+.content1 {
+    width: 600px;
+    height: 600px;
+
+    display: inline-block;
+    margin-top: 50px;
+    margin-left: 100px;
+}
+
+
+#lin {
+    margin: 20px 0;
+    height: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.names {
+    width: 300px;
+    margin-bottom: 30px;
+}
+.content3 ul {
+    padding-left: 0;
+    margin-bottom: 100px;
+}
+.content3 ul li{
+    list-style: none;
+}
+.btn1{
+    background-color: crimson;
+}
+.btn2{
+    background-color: greenyellow;
+}
