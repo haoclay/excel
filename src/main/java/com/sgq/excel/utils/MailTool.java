@@ -12,8 +12,8 @@ public class MailTool {
 
       static {
         properties.setProperty("foxmail.host","smtp.qq.com");
-        properties.setProperty("foxmail.host.mail","1853737225@qq.com");
-        properties.setProperty("foxmail.smtp.pwd","csdqqmyqqdzbcada");
+        properties.setProperty("foxmail.host.mail","shugq@foxmail.com");
+        properties.setProperty("foxmail.smtp.pwd","lwoydpyertwxbedf");
         properties.setProperty("foxmail.transport.protocol","smtp");
         properties.setProperty("foxmail.smtp.auth","true");
 
