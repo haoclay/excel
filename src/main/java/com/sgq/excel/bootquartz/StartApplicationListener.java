@@ -1,5 +1,7 @@
 package com.sgq.excel.bootquartz;
 
+import com.sgq.excel.service.IHomeWorkContentService;
+import com.sgq.excel.service.IStuHomeWorkService;
 import lombok.SneakyThrows;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,12 @@ public class StartApplicationListener implements ApplicationListener<ContextRefr
     @Autowired
     private Scheduler scheduler;
 
+
+
     @SneakyThrows
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        TriggerKey triggerKey = TriggerKey.triggerKey("trigger_mail","group_mail");
+        TriggerKey triggerKey = TriggerKey.triggerKey("trigger_homework","group_homework");
 
         try {
             Trigger trigger = scheduler.getTrigger(triggerKey);
@@ -24,15 +28,15 @@ public class StartApplicationListener implements ApplicationListener<ContextRefr
             if (trigger == null ){
                 trigger =  TriggerBuilder.newTrigger()
                         .withIdentity(triggerKey)
-                        .withSchedule(CronScheduleBuilder.cronSchedule("0 5-10 15 * * ?"))
+                        .withSchedule(CronScheduleBuilder.cronSchedule("0 20 14 * * ?"))
                         .build();
             }
 
-            JobKey jobKey = JobKey.jobKey("job_mail", "group_mail");
+            JobKey jobKey = JobKey.jobKey("job_homework", "group_homework");
             JobDetail jobDetail = scheduler.getJobDetail(jobKey);
             if(jobDetail == null){
-                jobDetail = JobBuilder.newJob(EmailJob.class)
-                        .withIdentity("job_mail","group_mail")
+                jobDetail = JobBuilder.newJob(HomeWorkJob.class)
+                        .withIdentity(jobKey)
                         .build();
             }
             scheduler.scheduleJob(jobDetail,trigger);

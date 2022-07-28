@@ -1,6 +1,8 @@
 package com.sgq.excel.bootquartz;
 
 
+import com.sgq.excel.service.IHomeWorkContentService;
+import com.sgq.excel.service.IStuHomeWorkService;
 import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -13,6 +15,8 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
@@ -21,6 +25,12 @@ public class SchedulerConfig {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private IStuHomeWorkService stuHomeWorkService;
+
+    @Autowired
+    private IHomeWorkContentService homeWorkContentService;
 
     @Bean
     @Primary
@@ -31,13 +41,19 @@ public class SchedulerConfig {
 
    @Bean
     public SchedulerFactoryBean getSchedulerFactoryBean(){
+       Map serviceMap = new HashMap();
+       serviceMap.put("homeWorkService",stuHomeWorkService);
+       serviceMap.put("contentService",homeWorkContentService);
+
+
        SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
        factoryBean.setSchedulerName("cluster_scheduler");
        factoryBean.setDataSource(dataSource);
        factoryBean.setApplicationContextSchedulerContextKey("application");
        factoryBean.setQuartzProperties(getProperties());
        factoryBean.setTaskExecutor(schedulerThreadPool());
-       factoryBean.setStartupDelay(10);
+       factoryBean.setSchedulerContextAsMap(serviceMap);
+       factoryBean.setStartupDelay(0);
        return factoryBean;
    }
 
@@ -47,12 +63,13 @@ public class SchedulerConfig {
        propertiesFactoryBean.setLocation(new ClassPathResource("/spring-quartz.properties"));
        try {
            propertiesFactoryBean.afterPropertiesSet();
-          return propertiesFactoryBean.getObject();
+           return propertiesFactoryBean.getObject();
        } catch (IOException e) {
            e.printStackTrace();
        }
 
        return null;
+
    }
 
     @Bean

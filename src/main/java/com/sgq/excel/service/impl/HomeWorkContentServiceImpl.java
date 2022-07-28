@@ -24,7 +24,7 @@ public class HomeWorkContentServiceImpl implements IHomeWorkContentService {
 
     @Override
     public boolean addBatchAndRemove(String clazz) {
-        List<HomeWorkContent> list = creator.creatContent(clazz);
+         List<HomeWorkContent> list = getHomeWorkContentList(clazz);
          mapper.deleteByClazz(clazz);
          Integer count = mapper.insertBatch(list);
          return count == list.size();
@@ -33,5 +33,10 @@ public class HomeWorkContentServiceImpl implements IHomeWorkContentService {
     @Override
     public List<SubmitPointsBean> findSubmitPoints(String clazz) {
         return mapper.selectSubmitPoints(clazz);
+    }
+
+    @Override
+    public List<HomeWorkContent> getHomeWorkContentList(String clazz) {
+        return creator.creatContent(clazz);
     }
 }

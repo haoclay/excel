@@ -10,4 +10,7 @@ public interface IHomeWorkContentService {
     boolean addBatchAndRemove(String clazz) ;
 
     List<SubmitPointsBean> findSubmitPoints(String clazz);
+
+    List<HomeWorkContent> getHomeWorkContentList(String clazz);
+
 }

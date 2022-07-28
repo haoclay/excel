@@ -216,6 +216,6 @@ public class StuHomeWorkCreator {
 
     public static void main(String[] args) {
         StuHomeWorkCreator stuHomeWorkCreator = new StuHomeWorkCreator();
-
+        System.out.println(stuHomeWorkCreator.creatContent("vip2202"));
     }
 }

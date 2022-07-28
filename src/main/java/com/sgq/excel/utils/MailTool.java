@@ -11,9 +11,9 @@ public class MailTool {
       private static  Properties properties = new Properties();
 
       static {
-        properties.setProperty("foxmail.host","smtp.qq.com");
-        properties.setProperty("foxmail.host.mail","shugq@foxmail.com");
-        properties.setProperty("foxmail.smtp.pwd","lwoydpyertwxbedf");
+        properties.setProperty("foxmail.host","smtp.163.com");
+        properties.setProperty("foxmail.host.mail","shugq1107@163.com");
+        properties.setProperty("foxmail.smtp.pwd","WRYCFJZCTFVIQNLV");
         properties.setProperty("foxmail.transport.protocol","smtp");
         properties.setProperty("foxmail.smtp.auth","true");
 
@@ -56,4 +56,6 @@ public class MailTool {
 
 
     }
+
+
 }
